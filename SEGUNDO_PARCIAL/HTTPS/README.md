@@ -1,0 +1,7 @@
+Práctica 9: HTTPS y OpenSSL (El candado del navegador)
+Este directorio contiene la implementación de un servidor HTTPS y la migración de la bitácora CRUD de incidencias sobre una capa de transporte cifrada con TLS utilizando certificados digitales generados con OpenSSL.   
+Seguridad de la llave privadaPor motivos de seguridad, la llave privada (llave.pem) está excluida del control de versiones mediante el archivo .gitignore y nunca debe subirse al repositorio.   Cómo generar el certificado y la llave privadaAntes de ejecutar el servidor por primera vez, genera los archivos llave.pem y certificado.pem ejecutando el siguiente comando de OpenSSL en la terminal dentro de esta carpeta:   Bashopenssl req -x509 -newkey rsa:2048 -nodes -keyout llave.pem -out certificado.pem -days 365 -subj "/CN=localhost" -addext "subjectAltName=DNS:localhost,IP:127.0.0.1"
+Cómo inspeccionar el certificado generadoPara visualizar en terminal los detalles del certificado (emisor, sujeto, vigencia y SAN):   Bashopenssl x509 -in certificado.pem -text -noout
+Ejecución del servidor y pruebasIniciar el servidor HTTPS:Bashpython servidor_https.py
+Probar con curl verificando el certificado:Bashcurl.exe --cacert certificado.pem https://localhost:8443/incidencias
+Ejecutar el cliente en Python:Bashpython
